@@ -121,19 +121,40 @@
       display:none;
     }
 
+    .exit-btn{
+      padding:5px 15px;
+      border:1px solid #ff6b6b;
+      border-radius:8px;
+      background:transparent;
+      color:#ff6b6b;
+      font-size:14px;
+      cursor:pointer;
+      transition:0.2s;
+    }
+
+    .exit-btn:hover{
+      background:#ff6b6b;
+      color:white;
+    }
+
     .score{
       text-align:center;
       font-size:32px;
       margin-top:30px;
       color:#0066d9;
+      line-height: 1.6;
     }
 
     .topbar{
       display:flex;
       justify-content:space-between;
-      margin-bottom:20px;
-      font-size:20px;
+      align-items:center;
+      margin-bottom:25px;
+      font-size:18px;
       color:#444;
+      background:#f8f9fa;
+      padding:10px 15px;
+      border-radius:10px;
     }
 
     .parts-grid {
@@ -215,6 +236,7 @@
     <div class="topbar">
       <div id="counter">Вопрос 1</div>
       <div id="scoreLive">Очки: 0</div>
+      <button class="exit-btn" onclick="goToMenu()">Выйти в меню</button>
     </div>
 
     <div class="question" id="question">
@@ -281,7 +303,6 @@ function generatePartsButtons() {
     const startIdx = i * size;
     const endIdx = Math.min(startIdx + size, allQuestions.length);
     
-    // Если вопросов меньше, чем частей, пустые блоки не создаем
     if (startIdx >= allQuestions.length) break;
 
     const btn = document.createElement("button");
@@ -308,7 +329,6 @@ function startQuiz(mode, config = null) {
     return;
   }
 
-  // Сброс состояния
   currentQuestion = 0;
   score = 0;
   isExamMode = false;
@@ -319,22 +339,18 @@ function startQuiz(mode, config = null) {
   finalScore.innerHTML = "";
   scoreLive.style.display = "block";
 
-  // Логика режимов
   if (mode === 'study') {
     quizQuestions = [...allQuestions];
   } 
   else if (mode === 'exam') {
     isExamMode = true;
-    // Перемешиваем и берём ровно 30 вопросов для Экзамена
     quizQuestions = [...allQuestions].sort(() => 0.5 - Math.random()).slice(0, 30);
-    scoreLive.style.display = "none"; // Скрываем очки на экзамене
+    scoreLive.style.display = "none"; 
   } 
   else if (mode === 'long-quick') {
-    // 20 случайных вопросов (с показом ошибок в процессе)
     quizQuestions = [...allQuestions].sort(() => 0.5 - Math.random()).slice(0, 20);
   }
   else if (mode === 'part' && config) {
-    // Берем строго определенный кусок вопросов по порядку
     quizQuestions = allQuestions.slice(config.start, config.end);
   }
 
@@ -369,14 +385,12 @@ function handleAnswerClick(index, button) {
   const buttons = answersEl.querySelectorAll("button");
 
   if (isExamMode) {
-    // На экзамене просто выделяем выбранное
     buttons.forEach(btn => btn.style.background = "#edf2ff");
     button.style.background = "#dbe7ff"; 
     selectedAnswerIndex = index;
     nextBtn.innerText = "Подтвердить ответ";
     nextBtn.style.display = "inline-block";
   } else {
-    // В обычных режимах и по частям — проверяем сразу
     buttons.forEach(btn => btn.disabled = true);
     if (index === q.correct) {
       button.classList.add("correct");
@@ -408,7 +422,9 @@ function nextQuestion() {
   currentQuestion++;
 
   if (currentQuestion >= quizQuestions.length) {
-    // Конец квиза
+    // Расчет процента правильных ответов
+    const percent = Math.round((score / quizQuestions.length) * 100);
+
     questionEl.style.display = "none";
     answersEl.style.display = "none";
     nextBtn.style.display = "none";
@@ -416,6 +432,7 @@ function nextQuestion() {
 
     finalScore.innerHTML = `
       <p>Ваш результат: <strong>${score} из ${quizQuestions.length}</strong></p>
+      <p style="font-size: 26px; color: #5fd38d; margin-top: 10px;">Выполнено: <strong>${percent}%</strong></p>
       <button class="next-btn" style="display:inline-block; margin-top:25px;" onclick="goToMenu()">Вернуться в меню</button>
     `;
     return;
