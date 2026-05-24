@@ -180,6 +180,12 @@
       background: #0066d9;
       color: white;
     }
+
+    .status-comment {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
   </style>
 </head>
 <body>
@@ -422,8 +428,28 @@ function nextQuestion() {
   currentQuestion++;
 
   if (currentQuestion >= quizQuestions.length) {
-    // Расчет процента правильных ответов
     const percent = Math.round((score / quizQuestions.length) * 100);
+
+    // Логика кастомных комментариев по процентам
+    let comment = "";
+    let commentColor = "#ff6b6b"; // Дефолтный красный для низких баллов
+
+    if (percent <= 49) {
+      comment = "таста ретейк";
+      commentColor = "#ff6b6b";
+    } else if (percent <= 64) {
+      comment = "бро надо тренироваться";
+      commentColor = "#ffa502";
+    } else if (percent <= 75) {
+      comment = "кушти зор";
+      commentColor = "#2ed573";
+    } else if (percent <= 85) {
+      comment = "да ты че базара нет";
+      commentColor = "#1e90ff";
+    } else {
+      comment = "ошш";
+      commentColor = "#20bf6b";
+    }
 
     questionEl.style.display = "none";
     answersEl.style.display = "none";
@@ -431,8 +457,9 @@ function nextQuestion() {
     scoreLive.style.display = "none";
 
     finalScore.innerHTML = `
+      <div class="status-comment" style="color: ${commentColor};">"${comment}"</div>
       <p>Ваш результат: <strong>${score} из ${quizQuestions.length}</strong></p>
-      <p style="font-size: 26px; color: #5fd38d; margin-top: 10px;">Выполнено: <strong>${percent}%</strong></p>
+      <p style="font-size: 26px; color: #444; margin-top: 10px;">Выполнено: <strong>${percent}%</strong></p>
       <button class="next-btn" style="display:inline-block; margin-top:25px;" onclick="goToMenu()">Вернуться в меню</button>
     `;
     return;
