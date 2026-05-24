@@ -92,6 +92,7 @@
       cursor:pointer;
       font-size:18px;
       transition:0.2s;
+      text-align: left;
     }
 
     .answers button:hover{
@@ -144,31 +145,31 @@
     <h1>Linux Fundamentals Quiz</h1>
 
     <div class="modes">
-      <div class="card" onclick="startQuiz()">
+      <div class="card" onclick="startQuiz('study')">
         <h2>Учебный режим</h2>
         <p>
-          Мгновенная проверка ответов и обучение.
+          Мгновенная проверка ответов и обучение по всей базе вопросов.
         </p>
       </div>
 
-      <div class="card" onclick="startQuiz()">
+      <div class="card" onclick="startQuiz('exam')">
         <h2>Экзамен</h2>
         <p>
-          Результат только после окончания теста.
+          Проверка знаний по всей базе. Результат только в самом конце.
         </p>
       </div>
 
-      <div class="card" onclick="startQuiz()">
+      <div class="card" onclick="startQuiz('quick')">
         <h2>Быстрый тест</h2>
         <p>
-          Случайные вопросы для тренировки.
+          5 случайных вопросов для быстрой разминки.
         </p>
       </div>
 
-      <div class="card" onclick="startQuiz()">
-        <h2>По темам</h2>
+      <div class="card" onclick="startQuiz('long-quick')">
+        <h2>Длинный тест</h2>
         <p>
-          Linux команды, Bash, процессы и права.
+          20 случайных вопросов для серьезной тренировки.
         </p>
       </div>
     </div>
@@ -198,12 +199,12 @@
 </div>
 
 <script>
-let allQuestions = []; // Все вопросы из базы
-let quizQuestions = []; // Вопросы для текущей сессии
+let allQuestions = []; 
+let quizQuestions = []; 
 let currentQuestion = 0;
 let score = 0;
-let isExamMode = false; // Флаг режима экзамена
-let selectedAnswerIndex = null; // Храним выбранный ответ для режима экзамена
+let isExamMode = false; 
+let selectedAnswerIndex = null; 
 
 const menu = document.getElementById("menu");
 const quiz = document.getElementById("quiz");
@@ -214,60 +215,55 @@ const finalScore = document.getElementById("finalScore");
 const counter = document.getElementById("counter");
 const scoreLive = document.getElementById("scoreLive");
 
-// 1. Загружаем вопросы сразу при старте страницы
+// Загружаем базу вопросов при старте страницы
 fetch("questions.json")
   .then(res => {
-    if (!res.ok) throw new Error("Не удалось загрузить вопросы. Проверьте questions.json");
+    if (!res.ok) throw new Error("Не удалось найти файл questions.json");
     return res.json();
   })
   .then(data => {
     allQuestions = data;
-    console.log("Вопросы успешно загружены:", allQuestions.length);
+    console.log("Вопросы загружены:", allQuestions.length);
   })
   .catch(err => {
-    alert("Ошибка конфигурации: убедитесь, что файл questions.json лежит в той же папке.");
+    alert("Ошибка загрузки данных! Убедитесь, что questions.json лежит в той же папке на GitHub.");
     console.error(err);
   });
 
-// 2. Запуск квиза с учетом выбранного режима
-function startQuiz(mode, topic = null) {
+// Функция запуска теста
+function startQuiz(mode) {
   if (allQuestions.length === 0) {
-    alert("Вопросы еще загружаются, подождите секунду...");
+    alert("База вопросов ещё загружается. Подождите пару секунд...");
     return;
   }
 
-  // Сброс настроек
+  // Полный сброс состояния квиза перед новой сессией
   currentQuestion = 0;
   score = 0;
   isExamMode = false;
   selectedAnswerIndex = null;
   
-  // Возвращаем видимость элементам после предыдущих игр
   questionEl.style.display = "block";
   answersEl.style.display = "flex";
   finalScore.innerHTML = "";
   scoreLive.style.display = "block";
 
-  // Логика режимов
+  // Распределение логики по режимам
   if (mode === 'study') {
     quizQuestions = [...allQuestions];
   } 
   else if (mode === 'exam') {
     isExamMode = true;
     quizQuestions = [...allQuestions];
-    scoreLive.style.display = "none"; // На экзамене не спойлерим очки
+    scoreLive.style.display = "none"; // Прячем счетчик очков во время экзамена
   } 
   else if (mode === 'quick') {
-    // Перемешиваем и берем, например, 5 случайных вопросов
+    // Перемешиваем и выбираем ровно 5 вопросов
     quizQuestions = [...allQuestions].sort(() => 0.5 - Math.random()).slice(0, 5);
   } 
-  else if (mode === 'topic') {
-    // Фильтруем по теме (в questions.json должно быть поле "topic")
-    quizQuestions = allQuestions.filter(q => q.topic === topic);
-    if (quizQuestions.length === 0) {
-      alert(`Вопросов по теме "${topic}" не найдено. Запускаем общую базу.`);
-      quizQuestions = [...allQuestions];
-    }
+  else if (mode === 'long-quick') {
+    // Перемешиваем и выбираем ровно 20 вопросов
+    quizQuestions = [...allQuestions].sort(() => 0.5 - Math.random()).slice(0, 20);
   }
 
   menu.style.display = "none";
@@ -275,7 +271,7 @@ function startQuiz(mode, topic = null) {
   showQuestion();
 }
 
-// 3. Отображение вопроса
+// Показ текущего вопроса
 function showQuestion() {
   nextBtn.style.display = "none";
   selectedAnswerIndex = null;
@@ -294,20 +290,20 @@ function showQuestion() {
   });
 }
 
-// 4. Обработка клика
+// Обработка выбора ответа
 function handleAnswerClick(index, button) {
   const q = quizQuestions[currentQuestion];
   const buttons = answersEl.querySelectorAll("button");
 
   if (isExamMode) {
-    // В режиме экзамена просто фиксируем выбор, не показывая правильный/неправильный
+    // Логика режима «Экзамен»: просто подсвечиваем кликнутую кнопку серым/голубым
     buttons.forEach(btn => btn.style.background = "#edf2ff");
-    button.style.background = "#dbe7ff"; // Подсвечиваем выбранный
+    button.style.background = "#dbe7ff"; 
     selectedAnswerIndex = index;
-    nextBtn.innerText = "Ответить";
+    nextBtn.innerText = "Подтвердить ответ";
     nextBtn.style.display = "inline-block";
   } else {
-    // В обычном режиме — мгновенная проверка
+    // Логика обычных режимов: подсвечиваем правильно/неправильно сразу
     buttons.forEach(btn => btn.disabled = true);
     if (index === q.correct) {
       button.classList.add("correct");
@@ -322,12 +318,16 @@ function handleAnswerClick(index, button) {
   }
 }
 
-// 5. Переход дальше
+// Переключение на следующий вопрос
 function nextQuestion() {
   const q = quizQuestions[currentQuestion];
 
-  // Если это экзамен, считаем очки только при переходе
+  // В режиме экзамена начисляем балл только в момент отправки ответа
   if (isExamMode) {
+    if (selectedAnswerIndex === null) {
+      alert("Выберите один из вариантов ответа!");
+      return;
+    }
     if (selectedAnswerIndex === q.correct) {
       score++;
     }
@@ -336,7 +336,7 @@ function nextQuestion() {
   currentQuestion++;
 
   if (currentQuestion >= quizQuestions.length) {
-    // Финал квиза
+    // Окончание игры и вывод результатов
     questionEl.style.display = "none";
     answersEl.style.display = "none";
     nextBtn.style.display = "none";
@@ -344,7 +344,7 @@ function nextQuestion() {
 
     finalScore.innerHTML = `
       <p>Ваш результат: <strong>${score} из ${quizQuestions.length}</strong></p>
-      <button class="next-btn" style="display:inline-block; margin-top:20px;" onclick="goToMenu()">В меню</button>
+      <button class="next-btn" style="display:inline-block; margin-top:25px;" onclick="goToMenu()">Вернуться в меню</button>
     `;
     return;
   }
@@ -352,6 +352,7 @@ function nextQuestion() {
   showQuestion();
 }
 
+// Возврат в главное меню
 function goToMenu() {
   quiz.style.display = "none";
   menu.style.display = "block";
@@ -360,4 +361,3 @@ function goToMenu() {
 
 </body>
 </html>
-```
