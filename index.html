@@ -68,7 +68,7 @@
       opacity:0.95;
     }
 
-    .quiz{
+    .quiz, .parts-menu {
       display:none;
     }
 
@@ -135,6 +135,30 @@
       font-size:20px;
       color:#444;
     }
+
+    .parts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .part-btn {
+      padding: 20px;
+      background: #edf2ff;
+      border: 2px solid #0066d9;
+      border-radius: 12px;
+      font-size: 18px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #0066d9;
+      transition: 0.2s;
+    }
+
+    .part-btn:hover {
+      background: #0066d9;
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -155,14 +179,14 @@
       <div class="card" onclick="startQuiz('exam')">
         <h2>Экзамен</h2>
         <p>
-          Проверка знаний по всей базе. Результат только в самом конце.
+          30 случайных вопросов. Результат отображается только после окончания теста.
         </p>
       </div>
 
-      <div class="card" onclick="startQuiz('quick')">
-        <h2>Быстрый тест</h2>
+      <div class="card" onclick="openPartsMenu()">
+        <h2>По частям</h2>
         <p>
-          5 случайных вопросов для быстрой разминки.
+          База разделена на 6 равных частей для более легкого и последовательного изучения.
         </p>
       </div>
 
@@ -173,6 +197,17 @@
         </p>
       </div>
     </div>
+  </div>
+
+  <div id="partsMenu" class="parts-menu">
+    <h1>Выберите часть для обучения</h1>
+    <p style="text-align:center; color:#666; margin-bottom:30px;" id="partsInfo">Вопросы загружаются...</p>
+    
+    <div class="parts-grid" id="partsGrid"></div>
+    
+    <button class="next-btn" style="display:inline-block; margin-top:30px; width:100%; background:#666;" onclick="goToMenu()">
+      Назад в главное меню
+    </button>
   </div>
 
   <div class="quiz" id="quiz">
@@ -207,7 +242,11 @@ let isExamMode = false;
 let selectedAnswerIndex = null; 
 
 const menu = document.getElementById("menu");
+const partsMenu = document.getElementById("partsMenu");
+const partsGrid = document.getElementById("partsGrid");
+const partsInfo = document.getElementById("partsInfo");
 const quiz = document.getElementById("quiz");
+
 const questionEl = document.getElementById("question");
 const answersEl = document.getElementById("answers");
 const nextBtn = document.getElementById("nextBtn");
@@ -224,20 +263,52 @@ fetch("questions.json")
   .then(data => {
     allQuestions = data;
     console.log("Вопросы загружены:", allQuestions.length);
+    partsInfo.innerText = `Всего вопросов в базе: ${allQuestions.length}. Выберите блок для последовательного изучения.`;
+    generatePartsButtons();
   })
   .catch(err => {
     alert("Ошибка загрузки данных! Убедитесь, что questions.json лежит в той же папке на GitHub.");
     console.error(err);
   });
 
-// Функция запуска теста
-function startQuiz(mode) {
+// Динамически создаем 6 кнопок для частей
+function generatePartsButtons() {
+  partsGrid.innerHTML = "";
+  const totalParts = 6;
+  const size = Math.ceil(allQuestions.length / totalParts);
+
+  for (let i = 0; i < totalParts; i++) {
+    const startIdx = i * size;
+    const endIdx = Math.min(startIdx + size, allQuestions.length);
+    
+    // Если вопросов меньше, чем частей, пустые блоки не создаем
+    if (startIdx >= allQuestions.length) break;
+
+    const btn = document.createElement("button");
+    btn.className = "part-btn";
+    btn.innerText = `Часть ${i + 1}\n(${startIdx + 1} - ${endIdx})`;
+    btn.onclick = () => startQuiz('part', { start: startIdx, end: endIdx });
+    partsGrid.appendChild(btn);
+  }
+}
+
+function openPartsMenu() {
   if (allQuestions.length === 0) {
-    alert("База вопросов ещё загружается. Подождите пару секунд...");
+    alert("База вопросов ещё загружается...");
+    return;
+  }
+  menu.style.display = "none";
+  partsMenu.style.display = "block";
+}
+
+// Функция запуска теста
+function startQuiz(mode, config = null) {
+  if (allQuestions.length === 0) {
+    alert("База вопросов ещё загружается...");
     return;
   }
 
-  // Полный сброс состояния квиза перед новой сессией
+  // Сброс состояния
   currentQuestion = 0;
   score = 0;
   isExamMode = false;
@@ -248,25 +319,27 @@ function startQuiz(mode) {
   finalScore.innerHTML = "";
   scoreLive.style.display = "block";
 
-  // Распределение логики по режимам
+  // Логика режимов
   if (mode === 'study') {
     quizQuestions = [...allQuestions];
   } 
   else if (mode === 'exam') {
     isExamMode = true;
-    quizQuestions = [...allQuestions];
-    scoreLive.style.display = "none"; // Прячем счетчик очков во время экзамена
-  } 
-  else if (mode === 'quick') {
-    // Перемешиваем и выбираем ровно 5 вопросов
-    quizQuestions = [...allQuestions].sort(() => 0.5 - Math.random()).slice(0, 5);
+    // Перемешиваем и берём ровно 30 вопросов для Экзамена
+    quizQuestions = [...allQuestions].sort(() => 0.5 - Math.random()).slice(0, 30);
+    scoreLive.style.display = "none"; // Скрываем очки на экзамене
   } 
   else if (mode === 'long-quick') {
-    // Перемешиваем и выбираем ровно 20 вопросов
+    // 20 случайных вопросов (с показом ошибок в процессе)
     quizQuestions = [...allQuestions].sort(() => 0.5 - Math.random()).slice(0, 20);
+  }
+  else if (mode === 'part' && config) {
+    // Берем строго определенный кусок вопросов по порядку
+    quizQuestions = allQuestions.slice(config.start, config.end);
   }
 
   menu.style.display = "none";
+  partsMenu.style.display = "none";
   quiz.style.display = "block";
   showQuestion();
 }
@@ -296,14 +369,14 @@ function handleAnswerClick(index, button) {
   const buttons = answersEl.querySelectorAll("button");
 
   if (isExamMode) {
-    // Логика режима «Экзамен»: просто подсвечиваем кликнутую кнопку серым/голубым
+    // На экзамене просто выделяем выбранное
     buttons.forEach(btn => btn.style.background = "#edf2ff");
     button.style.background = "#dbe7ff"; 
     selectedAnswerIndex = index;
     nextBtn.innerText = "Подтвердить ответ";
     nextBtn.style.display = "inline-block";
   } else {
-    // Логика обычных режимов: подсвечиваем правильно/неправильно сразу
+    // В обычных режимах и по частям — проверяем сразу
     buttons.forEach(btn => btn.disabled = true);
     if (index === q.correct) {
       button.classList.add("correct");
@@ -322,7 +395,6 @@ function handleAnswerClick(index, button) {
 function nextQuestion() {
   const q = quizQuestions[currentQuestion];
 
-  // В режиме экзамена начисляем балл только в момент отправки ответа
   if (isExamMode) {
     if (selectedAnswerIndex === null) {
       alert("Выберите один из вариантов ответа!");
@@ -336,7 +408,7 @@ function nextQuestion() {
   currentQuestion++;
 
   if (currentQuestion >= quizQuestions.length) {
-    // Окончание игры и вывод результатов
+    // Конец квиза
     questionEl.style.display = "none";
     answersEl.style.display = "none";
     nextBtn.style.display = "none";
@@ -352,9 +424,10 @@ function nextQuestion() {
   showQuestion();
 }
 
-// Возврат в главное меню
+// Возврат в меню
 function goToMenu() {
   quiz.style.display = "none";
+  partsMenu.style.display = "none";
   menu.style.display = "block";
 }
 </script>
