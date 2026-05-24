@@ -199,31 +199,1738 @@
 
 <script>
 
-const questions = [
+[
   {
-    question: "Какая команда показывает текущую директорию?",
-    answers: ["ls", "pwd", "cd", "mkdir"],
-    correct: 1
+    "question": "What octal number (decimal number) in the Linux permission system corresponds to full permissions: read, write, and execute (rwx)?",
+    "answers": [
+      "5",
+      "6",
+      "7",
+      "777"
+    ],
+    "correct": 2
   },
-
   {
-    question: "Какая команда выводит список файлов?",
-    answers: ["cat", "ls", "pwd", "rm"],
-    correct: 1
+    "question": "Which command can be used to view the permissions of a file or directory in long format?",
+    "answers": [
+      "ls -a",
+      "ls -l",
+      "stat -f",
+      "view --long"
+    ],
+    "correct": 1
   },
-
   {
-    question: "Какая команда удаляет файл?",
-    answers: ["touch", "nano", "rm", "cp"],
-    correct: 2
+    "question": "Which of the special file extended attributes (chattr) makes a file immutable, preventing its modification, deletion, or renaming?",
+    "answers": [
+      "chattr +a",
+      "chattr +x",
+      "chattr +m",
+      "chattr +i"
+    ],
+    "correct": 3
   },
-
   {
-    question: "Какая команда создает директорию?",
-    answers: ["mkdir", "rmdir", "grep", "mv"],
-    correct: 0
+    "question": "According to the standard directory hierarchy (FHS), what is the main purpose of the /etc directory?",
+    "answers": [
+      "Executable binary files for users.",
+      "System configuration files.",
+      "Temporary runtime files.",
+      "System log files and caches."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What octal number (decimal number) in the Linux permission system corresponds to read and execute permission, but without write permission (r-x)?",
+    "answers": [
+      "4",
+      "5",
+      "6",
+      "3"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is /sbin and who typically uses it?",
+    "answers": [
+      "User applications used by all standard users.",
+      "Source files used by developers.",
+      "System utilities used typically by root.",
+      "Shared libraries used by the kernel."
+    ],
+    "correct": 2
+  },
+  {
+    "question": "In accordance with the principle of least privilege, what is recommended to use instead of direct access as the root user?",
+    "answers": [
+      "su -",
+      "sudo",
+      "runas",
+      "chroot"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which command checks the status and \"health\" of disks and file systems?",
+    "answers": [
+      "df -h",
+      "fdisk",
+      "fsck",
+      "chkdisk"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What is the purpose of the special file extended attribute 'a' (append only), set via chattr +a?",
+    "answers": [
+      "Append data only.",
+      "Advanced read-only mode.",
+      "Auto-backup on change.",
+      "Archive file compression."
+    ],
+    "correct": 0
+  },
+  {
+    "question": "What is the recommended permission level (octal code) usually assigned to configuration files, such as /etc/config.conf?",
+    "answers": [
+      "755",
+      "600",
+      "644",
+      "444"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which command is used to create a new directory (folder) in Linux?",
+    "answers": [
+      "md",
+      "newdir",
+      "mkdir",
+      "create -d"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which symbol is used to denote the parent directory (Parent dir) when working with relative paths?",
+    "answers": [
+      ".",
+      "..",
+      "/",
+      "~"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which command allows you to rename a file or move it to another directory?",
+    "answers": [
+      "rn",
+      "cp",
+      "mv",
+      "transfer"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which command can create a new, empty file, or update the last access and modification time (timestamp) of an existing file?",
+    "answers": [
+      "new",
+      "touch",
+      "cat",
+      "update"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the program called that receives and interprets commands entered by the user in a text interface (terminal)?",
+    "answers": [
+      "Kernel.",
+      "Shell.",
+      "Desktop Environment.",
+      "Systemd."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which option of the find command can be used to find directories (folders) with a specific name?",
+    "answers": [
+      "-dir",
+      "-f d",
+      "-type d",
+      "-mode folder"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which command is used to get the most detailed help and documentation (manual pages) for a specific command?",
+    "answers": [
+      "help",
+      "info",
+      "man",
+      "doc"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which symbol is used to denote a user's home directory (Home dir)?",
+    "answers": [
+      "/",
+      ".",
+      "~",
+      "@"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What does the PS1 environment variable usually show?",
+    "answers": [
+      "The first running process ID.",
+      "Prompt shell.",
+      "Page size of the system memory.",
+      "Password security level."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which command will show which shell is currently being used?",
+    "answers": [
+      "whoami",
+      "echo $SHELL",
+      "show shell",
+      "ps -shell"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What does the / symbol mean in Linux paths?",
+    "answers": [
+      "Root directory.",
+      "Home directory of the current user.",
+      "Main partition shortcut.",
+      "Escape character."
+    ],
+    "correct": 0
+  },
+  {
+    "question": "What does . mean in a path?",
+    "answers": [
+      "Parent directory.",
+      "Current directory.",
+      "Hidden directory.",
+      "Root directory."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is an absolute path?",
+    "answers": [
+      "A path relative to the current folder.",
+      "A shortcut path using the ~ symbol.",
+      "Full path from /.",
+      "A path generated by the pwd command automatically."
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What are hidden files in Linux (by name)?",
+    "answers": [
+      "Files with the .hid extension.",
+      "Starting with .",
+      "Marked with chattr +h.",
+      "Placed inside the /tmp folder."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which command prints the current path (current directory)?",
+    "answers": [
+      "path",
+      "cd --where",
+      "pwd",
+      "whereami"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which command changes the current directory?",
+    "answers": [
+      "ch",
+      "cd",
+      "move",
+      "goto"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "How do you correctly copy a directory recursively?",
+    "answers": [
+      "cp -a",
+      "cp -all",
+      "cp -r",
+      "cp -f"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which option of rm enables interactive mode with confirmation?",
+    "answers": [
+      "-c",
+      "-i",
+      "-f",
+      "--confirm"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "How to correctly handle a filename with spaces in mv?",
+    "answers": [
+      "Brackets [file name]",
+      "Slashes /file name/",
+      "Quotation marks \"file name\"",
+      "Percent signs %file name%"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "How to list the contents of a directory?",
+    "answers": [
+      "dir",
+      "list",
+      "ls",
+      "show"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which command gives detailed help on ls?",
+    "answers": [
+      "ls --info",
+      "man ls",
+      "help ls",
+      "doc ls"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which command usually gives a brief help on a utility (options and keys)?",
+    "answers": [
+      "-h",
+      "man",
+      "--help",
+      "?"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which command searches for a file named report.txt in the current folder and subfolders?",
+    "answers": [
+      "find . -name \"report.txt\"",
+      "grep \"report.txt\" .",
+      "whereis report.txt",
+      "search -f report.txt"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "How to find all files with the .txt extension using find?",
+    "answers": [
+      "find . *.txt",
+      "find . -name \"*.txt\"",
+      "find -ext txt",
+      "ls | grep txt"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "How to find files modified in the last 7 days?",
+    "answers": [
+      "find . -day 7",
+      "find . -mtime -7",
+      "find . -modified 7d",
+      "grep -m 7 ."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "How to find directories named src?",
+    "answers": [
+      "find . -dir \"src\"",
+      "find . -name \"src\" -dir",
+      "find . -type d -name \"src\"",
+      "ls -d \"src\""
+    ],
+    "correct": 2
+  },
+  {
+    "question": "How to find files larger than 1 MB?",
+    "answers": [
+      "find . -weight +1M",
+      "find . -size +1M",
+      "find . -mb 1",
+      "ls -lh | grep \"+1M\""
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which command will find and immediately delete .tmp files?",
+    "answers": [
+      "find . -name \"*.tmp\" rm",
+      "find . -name \"*.tmp\" -delete",
+      "rm -f *.tmp",
+      "find . -name \"*.tmp\" | rm"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What does the construction \"mkdir linux_practice && cd linux_practice\" do?",
+    "answers": [
+      "Creates a folder and updates the current one.",
+      "Changes to a folder only if it already existed.",
+      "Creates a folder and changes to it.",
+      "Creates a folder and deletes the old one."
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What is Bash?",
+    "answers": [
+      "A type of Linux kernel.",
+      "Linux Shell.",
+      "A graphical text editor.",
+      "Network security protocol."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the main purpose of the shell in Linux?",
+    "answers": [
+      "Memory allocation.",
+      "Executes commands.",
+      "Compilation of C programs.",
+      "Hardware diagnostics."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What does the pipe | (pipeline) do?",
+    "answers": [
+      "Redirects errors to a text file.",
+      "Passes output between commands.",
+      "Stops execution of a script.",
+      "Connects two remote servers."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What does the command ls -l | grep \".txt\" do?",
+    "answers": [
+      "Renames all files to .txt.",
+      "Searches for \".txt\" in the ls output.",
+      "Counts the number of text files.",
+      "Deletes non-text files from long listing."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is grep most commonly used for?",
+    "answers": [
+      "File sorting.",
+      "Password hashing.",
+      "Searches for text.",
+      "Disk partitioning."
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What does wc -l do?",
+    "answers": [
+      "Counts words.",
+      "Changes directory permissions.",
+      "Counts lines.",
+      "Displays system uptime."
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What does the command cat /etc/passwd | wc -l do?",
+    "answers": [
+      "Prints user passwords.",
+      "Counts lines in /etc/passwd.",
+      "Searches for the word \"wc\" in the file.",
+      "Deletes empty lines in the file."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which stream corresponds to stdin?",
+    "answers": [
+      "0",
+      "1",
+      "2",
+      "3"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "Which stream corresponds to stdout?",
+    "answers": [
+      "0",
+      "1",
+      "2",
+      "&1"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which stream corresponds to stderr?",
+    "answers": [
+      "0",
+      "1",
+      "2",
+      "*"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What does the redirection > mean?",
+    "answers": [
+      "Appends data to a file.",
+      "Overwrites a file.",
+      "Takes input from a file.",
+      "Routes data to an error log."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What does the redirection >> mean?",
+    "answers": [
+      "Appends to a file.",
+      "Overwrites a file.",
+      "Forces file execution.",
+      "Compares two files."
+    ],
+    "correct": 0
+  },
+  {
+    "question": "What does the command echo \"Hello\" > file.txt do?",
+    "answers": [
+      "Displays \"Hello\" on the screen and deletes file.txt.",
+      "Appends \"Hello\" to the end of file.txt.",
+      "Overwrites file.txt with the word Hello.",
+      "Searches for \"Hello\" inside file.txt."
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What does the command echo \"World\" >> file.txt do?",
+    "answers": [
+      "Appends World to the end of the file.",
+      "Overwrites the file with the word World.",
+      "Deletes the file if World isn't found.",
+      "Creates a backup copy named World."
+    ],
+    "correct": 0
+  },
+  {
+    "question": "What does the redirection < in the command wc -l < file.txt do?",
+    "answers": [
+      "Writes the output of wc into file.txt.",
+      "Uses the file as input.",
+      "Compares line lengths in file.txt.",
+      "Hides the error stream."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What does 2> error.log do?",
+    "answers": [
+      "Redirects the standard output stream (stdout) to a file.",
+      "Errors to a file.",
+      "Duplicates input stream.",
+      "Runs the command twice."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What does the construction command > all.log 2>&1 mean?",
+    "answers": [
+      "Separates logs into two different files.",
+      "stdout and stderr to a single file.",
+      "Ignores errors and prints only stdout.",
+      "Runs a background task with multiple priorities."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "In the Nano editor, what key combination is used to save (Write Out) the current file?",
+    "answers": [
+      "Ctrl+X",
+      "Ctrl+S",
+      "Ctrl+O",
+      "Ctrl+W"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What command in Vim's Command-line mode allows you to save the file and exit the editor?",
+    "answers": [
+      ":q!",
+      ":w",
+      ":wq",
+      ":exit"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which principle is the principle of least privilege (Least Privilege)?",
+    "answers": [
+      "Minimum required privileges.",
+      "Complete restriction of network activity.",
+      "Mandatory usage of root account for security.",
+      "Full write access for standard users."
+    ],
+    "correct": 0
+  },
+  {
+    "question": "What UID does the superuser root have?",
+    "answers": [
+      "1",
+      "1000",
+      "0",
+      "-1"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What is the UID range for system users (service accounts) according to the lecture?",
+    "answers": [
+      "1–999",
+      "1000–2000",
+      "0–100",
+      "500–5000"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "Who are \"regular users\" in terms of UID?",
+    "answers": [
+      "UID 0",
+      "UID 1-500",
+      "1000+",
+      "Negative UIDs"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What is GID?",
+    "answers": [
+      "Global Identifier.",
+      "Group ID.",
+      "General Daemon.",
+      "Gateway Interface Domain."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What happens when a user creates a file or process?",
+    "answers": [
+      "Root automatically becomes the owner.",
+      "The user becomes the owner.",
+      "The file becomes group-writable by default.",
+      "It gets public permissions."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "How does the kernel decide which permissions to apply when accessing a file?",
+    "answers": [
+      "By UID/GID and permissions.",
+      "Based on file size and extension.",
+      "Using hardware encryption keys.",
+      "By checking the active terminal session type."
+    ],
+    "correct": 0
+  },
+  {
+    "question": "What is the order of permission checking (permission check order) according to the lecture?",
+    "answers": [
+      "Others → Group → Owner",
+      "Owner → Group → Others.",
+      "Group → Owner → Others",
+      "System → Admin → User"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which file is designated as a critical system file with the user database?",
+    "answers": [
+      "/etc/shadow",
+      "/etc/group",
+      "/etc/passwd",
+      "/var/log/users"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "How many fields (separated by colons) are in a /etc/passwd entry according to the lecture?",
+    "answers": [
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Where are password hashes stored in modern Linux systems?",
+    "answers": [
+      "/etc/passwd",
+      "/etc/shadow",
+      "/var/lib/pass",
+      "/etc/security"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What access permissions are specified for /etc/shadow in the lecture?",
+    "answers": [
+      "777",
+      "644",
+      "600/640",
+      "755"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What is in the 2nd field of a /etc/shadow line?",
+    "answers": [
+      "Username.",
+      "Password hash.",
+      "Expiration date.",
+      "Home directory path."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which cryptographic measure from the lecture prevents the use of rainbow tables?",
+    "answers": [
+      "Salt.",
+      "Pepper.",
+      "Symmetric cipher.",
+      "Public key."
+    ],
+    "correct": 0
+  },
+  {
+    "question": "What is \"iterative hashing\" (according to the lecture) and why is it used?",
+    "answers": [
+      "Changing the hashing algorithm on every reboot.",
+      "Multiple hashing to make brute-force attacks more difficult.",
+      "Distributing the hash across multiple files.",
+      "Fast hashing for quick user validation."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which command adds a group?",
+    "answers": [
+      "useradd -g",
+      "groupadd",
+      "mkgroup",
+      "addgroup --new"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which command adds a user to an additional group?",
+    "answers": [
+      "usermod -g",
+      "usermod -aG",
+      "useradd -G",
+      "chgrp -u"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which command assigns ownership/group to the /var/www directory?",
+    "answers": [
+      "chmod user:group /var/www",
+      "chown user:group /var/www",
+      "chgrp user /var/www",
+      "setfacl user:group /var/www"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which command sets permissions 775 for the /var/www directory recursively?",
+    "answers": [
+      "chmod 775 /var/www",
+      "chmod -R 775 /var/www",
+      "chown -R 775 /var/www",
+      "chmod --all 775 /var/www"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What does the first character 'd' in the permission output (e.g., drwx...) mean?",
+    "answers": [
+      "Data file.",
+      "Directory.",
+      "Device link.",
+      "Deleted file."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What does the first character 'l' in the permission output (e.g., lrwx...) mean?",
+    "answers": [
+      "Local file.",
+      "Log file.",
+      "Symbolic link.",
+      "Locked directory."
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What is the protection called that allows only the file owner to delete a file in a shared directory?",
+    "answers": [
+      "SUID bit.",
+      "SGID bit.",
+      "Sticky bit (+t)",
+      "Immutable flag."
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which command sets the sticky bit on a directory (as in the lecture)?",
+    "answers": [
+      "chmod +s directory",
+      "chmod +t directory (or chmod 1777 directory)",
+      "chattr +sticky directory",
+      "setfacl -s directory"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which grep command option enables case-insensitive search?",
+    "answers": [
+      "-v",
+      "-i",
+      "-c",
+      "-r"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which command will search for the word \"password\" in all files inside the /var/log directory (recursively)?",
+    "answers": [
+      "find /var/log -name \"password\"",
+      "grep -r \"password\" /var/log",
+      "grep -i \"password\" /var/log",
+      "sed /password/ /var/log"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which sed command syntax is used to replace all occurrences of the word \"admin\" with \"user\" in a file?",
+    "answers": [
+      "sed 's/admin/user/' file",
+      "sed 's/admin/user/g' file",
+      "sed 'g/admin/user/s' file",
+      "sed 'replace admin user' file"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which sed command will delete the 5th line in a file?",
+    "answers": [
+      "sed 'remove 5' file",
+      "sed '5d' file",
+      "sed '5x' file",
+      "sed '/5/d' file"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "How to print only the contents of the second column of a file using awk?",
+    "answers": [
+      "awk '{print col2}' file",
+      "awk '{print $2}' file",
+      "awk 'print #2' file",
+      "awk -c 2 file"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which find command will find all files with the .log extension in the /var/log directory?",
+    "answers": [
+      "find /var/log \"*.log\"",
+      "find /var/log -name \"*.log\"",
+      "find /var/log -type f .log",
+      "ls /var/log/*.log"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What does the -exec option do in the find command?",
+    "answers": [
+      "Increases the execution priority of find.",
+      "Executes a command on the found files.",
+      "Forces search in active memory.",
+      "Excludes specified files from search results."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the xargs command used for?",
+    "answers": [
+      "Pass the output of one command as arguments to another.",
+      "Encrypt data arguments before processing.",
+      "Generate mathematical series in bash.",
+      "Compress file contents into a stream."
+    ],
+    "correct": 0
+  },
+  {
+    "question": "Which sort command option is used for numerical sorting?",
+    "answers": [
+      "-g",
+      "-s",
+      "-n",
+      "-m"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which combination of commands will sort a file and show the count of each unique line?",
+    "answers": [
+      "uniq -c | sort file",
+      "sort -u file",
+      "sort file | uniq -c",
+      "count | sort file"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which package format is used in Debian-family distributions (Ubuntu, Kali, Linux Mint)?",
+    "answers": [
+      ".rpm",
+      ".deb",
+      ".tar.gz",
+      ".apk"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which utility is the modern standard for package management in RHEL 8+ and its clones (Rocky, AlmaLinux)?",
+    "answers": [
+      "yum-old",
+      "apt",
+      "dnf",
+      "pacman"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What is the role of the Fedora distribution in the Red Hat ecosystem?",
+    "answers": [
+      "Long-term corporate support base.",
+      "Testing/innovation base for Red Hat.",
+      "Free static mirror of RHEL.",
+      "Separate branch for embedded devices."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which command in Debian/Kali is used to update the local package list (cache) so the system learns about new versions?",
+    "answers": [
+      "apt update",
+      "apt upgrade",
+      "dpkg --update",
+      "apt-get install --cache"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "Which low-level utility in the Debian family installs .deb files but does NOT resolve dependencies?",
+    "answers": [
+      "apt",
+      "dpkg",
+      "rpm",
+      "gdebi"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the purpose of GPG signatures for packages?",
+    "answers": [
+      "Compressing package metadata.",
+      "Verifying the authenticity and integrity of packages.",
+      "Speeding up package installation.",
+      "Automatic license compliance check."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the name of the \"mother\" distribution that is the benchmark of stability for the family that includes Ubuntu and Kali?",
+    "answers": [
+      "Red Hat",
+      "Arch Linux",
+      "Debian",
+      "Slackware"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What is a \"process\" in the context of the Linux operating system according to the lecture?",
+    "answers": [
+      "Any uncompiled binary file on the disk.",
+      "A running instance of a program.",
+      "Kernel module responsible for network connection.",
+      "Cron job schedule format."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the main difference between threads and processes?",
+    "answers": [
+      "Threads have distinct PIDs; processes do not.",
+      "Processes have separate memory, threads share process memory.",
+      "Processes are controlled by user space; threads are kernel-only.",
+      "Threads are much larger than processes."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What does the process state \"Z\" (Zombie) mean in the output of monitoring commands?",
+    "answers": [
+      "The process is suspended via SIGSTOP.",
+      "The process has terminated, but a record of it still exists.",
+      "The process is heavily using CPU resources.",
+      "The process is loading into RAM."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which command is used to view all processes in the system in BSD style (showing user, CPU, memory, and status)?",
+    "answers": [
+      "ps -ef",
+      "ps aux",
+      "top -all",
+      "jobs"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which key must be pressed in the interactive mode of the top utility to sort processes by memory consumption?",
+    "answers": [
+      "P",
+      "S",
+      "M",
+      "T"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What range of nice (priority) values is used in Linux?",
+    "answers": [
+      "0 to 100",
+      "-20 to 19",
+      "1 to 10",
+      "-128 to 127"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which signal is sent by the kill command by default (without specifying a signal number or name), ensuring graceful process termination?",
+    "answers": [
+      "SIGKILL (9)",
+      "SIGINT (2)",
+      "SIGTERM (15)",
+      "SIGHUP (1)"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What is the purpose of the SIGKILL signal (number 9)?",
+    "answers": [
+      "Ask the process politely to stop.",
+      "Put the process in background mode.",
+      "Immediately forcefully terminate a process.",
+      "Clear the memory cache of the process."
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which command is used to change the priority (nice) of an already running process?",
+    "answers": [
+      "nice",
+      "renice",
+      "chpriority",
+      "setpriority"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which command is used to manage system services (daemons) in modern distributions with systemd?",
+    "answers": [
+      "service",
+      "init.d",
+      "systemctl",
+      "chkconfig"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "How to run a command in the background via the terminal?",
+    "answers": [
+      "command &&",
+      "bg command",
+      "command &",
+      "command @"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which command returns a background process to the foreground?",
+    "answers": [
+      "bg",
+      "fg",
+      "return",
+      "bring"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the main difference between the TCP and UDP protocols according to the lecture?",
+    "answers": [
+      "TCP is reliable, connection-based; UDP is faster, but delivery is uncertain.",
+      "TCP is used only locally; UDP works globally on the internet.",
+      "UDP requires complex handshake; TCP drops packets silently.",
+      "TCP cannot transmit multimedia files."
+    ],
+    "correct": 0
+  },
+  {
+    "question": "What does the notation /24 in CIDR (e.g., 192.168.1.0/24) mean?",
+    "answers": [
+      "The network has 24 active hosts.",
+      "24 bits — network (mask 255.255.255.0).",
+      "Maximum data speed is 24 Mbps.",
+      "Network port number is 24."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which of the listed IP address ranges belongs to private addresses (Private IP, RFC 1918) and is not routable on the internet?",
+    "answers": [
+      "8.8.8.0/24, 1.1.1.0/24",
+      "100.64.0.0/10",
+      "10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16",
+      "224.0.0.0/4"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which protocol does the ping utility use to check host availability?",
+    "answers": [
+      "TCP",
+      "UDP",
+      "ICMP",
+      "HTTP"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "How does the traceroute utility determine the path of packets?",
+    "answers": [
+      "By directly querying local DNS servers.",
+      "Using unique packet sequence numbers.",
+      "By increasing the TTL of packets.",
+      "Using geolocation databases."
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What is the advantage of the mtr utility over standard ping and traceroute?",
+    "answers": [
+      "It can crack firewalls during tracing.",
+      "Combines ping and traceroute in real time.",
+      "Measures optical cable length.",
+      "Requires no internet connection to test routers."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Why is it recommended to use the ss utility instead of netstat in modern Linux distributions?",
+    "answers": [
+      "Faster and more modern.",
+      "Has built-in graphical interface.",
+      "Does not require root access to check any port.",
+      "Automatically blocks malicious connections."
+    ],
+    "correct": 0
+  },
+  {
+    "question": "When generating SSH keys (ssh-keygen) using the EdDSA (Edwards-curve Digital Signature Algorithm) cryptographic algorithm, which file is the private key and must be kept absolutely secret?",
+    "answers": [
+      "id_ed25519.pub",
+      "id_ed25519",
+      "authorized_keys",
+      "known_hosts"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the scp command used for?",
+    "answers": [
+      "Scanning ports securely.",
+      "Secure file copying over SSH.",
+      "Changing user passwords remotely.",
+      "Creating scripts with safe attributes."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What recommendation is given in the \"Best Practices\" section for improving SSH security?",
+    "answers": [
+      "Change password complexity to 32 characters minimum.",
+      "Disable password login and use SSH keys.",
+      "Move SSH to port 80.",
+      "Give full root rights to standard users to avoid login errors."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What does the TTL (Time To Live) parameter do in network packets?",
+    "answers": [
+      "Limits the time/number of packet hops.",
+      "Controls the total bytes of packet payload.",
+      "Defines how long a packet stays encrypted.",
+      "Sets the response deadline for the target host."
+    ],
+    "correct": 0
+  },
+  {
+    "question": "What is the Shell in Linux?",
+    "answers": [
+      "Graphical control center.",
+      "Command interpreter.",
+      "Secure memory storage.",
+      "File recovery software."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which shell is the de facto standard in most Linux distributions?",
+    "answers": [
+      "Zsh",
+      "Bash.",
+      "Fish",
+      "Sh"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is a shell script?",
+    "answers": [
+      "A compiled C/C++ program.",
+      "A file containing shell commands.",
+      "System configuration log.",
+      "Database access policy rule."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Why is shell scripting required for a security specialist?",
+    "answers": [
+      "To compile custom Linux kernels.",
+      "To automate tasks and administration.",
+      "To bypass corporate firewalls manually.",
+      "To monitor physical server temperatures."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What does the #! (shebang) character sequence at the beginning of a script mean?",
+    "answers": [
+      "Starts a multiline comment block.",
+      "Specifies the script interpreter.",
+      "Disables standard error reporting.",
+      "Escalates privileges to root automatically."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which shebang is the most portable across systems?",
+    "answers": [
+      "#!/bin/bash",
+      "#!/usr/bin/env bash",
+      "#!/bash",
+      "#!bash"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "How to make a script executable?",
+    "answers": [
+      "chmod +x script.sh",
+      "chown root script.sh",
+      "run script.sh",
+      "attr +e script.sh"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "How do local script variables differ from environment variables?",
+    "answers": [
+      "Local variables are saved to disk; environment variables stay in RAM.",
+      "Local — only in the shell; environment — accessible to child processes.",
+      "Environment variables cannot be modified inside scripts.",
+      "Local variables require a $ symbol, environment variables use %."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "In which file are environment variables typically made permanent for a specific user?",
+    "answers": [
+      "/etc/environment",
+      "~/.bashrc",
+      "/tmp/env.conf",
+      "~/.profile_backup"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What does the $# variable do in a script?",
+    "answers": [
+      "PID of the active script process.",
+      "Number of arguments.",
+      "Exit code of the last command.",
+      "Name of the current user running the script."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What does the command ping -c1 -W1 \"$TARGET\" &>/dev/null do in a script?",
+    "answers": [
+      "Spams 100 packets to target host and saves response.",
+      "1 ping with a 1-second timeout, output hidden.",
+      "Erases network records if target isn't reachable.",
+      "Measures network bandwidth silently."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "How to set up a script to run every 10 minutes via cron?",
+    "answers": [
+      "10 * * * * command",
+      "*/10 * * * * command",
+      "@reboot 10m command",
+      "* * * * 10 command"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Why is it important for a cybersecurity specialist to know the Linux filesystem and access control mechanisms?",
+    "answers": [
+      "To build custom desktop configurations.",
+      "To protect data and manage access.",
+      "To avoid using terminal interfaces completely.",
+      "To speed up program compile times."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What risk is associated with modifying files in the /etc directory?",
+    "answers": [
+      "Temporary files will be completely deleted.",
+      "Can compromise the system or security.",
+      "Disk partitions will lose formatting.",
+      "System logs will stop updating permanently."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which file contains user password hashes?",
+    "answers": [
+      "/etc/passwd",
+      "/etc/shadow",
+      "/var/log/auth.log",
+      "/etc/secure"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What type of data is located in the /var directory?",
+    "answers": [
+      "Kernel source files.",
+      "Volatile data (logs, cache, mail, database).",
+      "User document folders.",
+      "System static binaries."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Why is the /var/log directory considered sensitive?",
+    "answers": [
+      "It stores critical user passwords in cleartext.",
+      "Contains system and security logs.",
+      "It gets automatically wiped every 10 minutes.",
+      "Accessible only via network protocols."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What does the /home directory contain?",
+    "answers": [
+      "Core configuration files.",
+      "User home directories.",
+      "Shared hardware device shortcuts.",
+      "Web-server root data."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Why is it necessary to protect the /root directory?",
+    "answers": [
+      "It holds public help instructions.",
+      "This is root's home directory and contains sensitive data.",
+      "Any standard user can read it by default.",
+      "It is mapped directly to physical RAM chips."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the purpose of the /tmp and /var/tmp directories?",
+    "answers": [
+      "Temporary files./tmp is usually cleared on reboot, /var/tmp is stored longer.",
+      "Encrypted user data; /tmp is for small files, /var/tmp for massive backups.",
+      "Permanent logs of network errors.",
+      "Mounting external USB storage keys."
+    ],
+    "correct": 0
+  },
+  {
+    "question": "What are ACLs (Access Control Lists)?",
+    "answers": [
+      "Legacy network firewalls.",
+      "Extended file access rights.",
+      "Lists of active processes.",
+      "Cryptographic user keys databases."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the priority of access rights when using ACLs?",
+    "answers": [
+      "Standard permissions take precedence.",
+      "ACLs take precedence over regular permissions.",
+      "They are processed simultaneously randomly.",
+      "Depends on the user's active shell type."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What advantages does using ACLs provide?",
+    "answers": [
+      "Full encryption of files on low-spec drives.",
+      "More flexible access control.",
+      "Bypassing root privilege requirements completely.",
+      "Automatic system backup synchronization."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which bit allows a program to run with the file owner's privileges?",
+    "answers": [
+      "SUID.",
+      "SGID.",
+      "Sticky bit.",
+      "Immutable flag."
+    ],
+    "correct": 0
+  },
+  {
+    "question": "How is the SGID bit used for directories?",
+    "answers": [
+      "Prevents any user from reading files inside.",
+      "New files inherit the directory's group.",
+      "Automatically compresses any added file.",
+      "Sets permissions to 777 instantly."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What does setting the Sticky bit mean (e.g., chmod 1777 /shared/temp)?",
+    "answers": [
+      "Nobody can access files except root.",
+      "Only the owner or root can delete a file.",
+      "Files become permanent and cannot be modified.",
+      "Changes are sent to active network streams."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which command is used to view current ACLs on a file?",
+    "answers": [
+      "ls -acl file",
+      "getfacl file",
+      "showfacl file",
+      "stat --acl file"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What does the command setfacl -m u:alice:rw /shared/file.txt do?",
+    "answers": [
+      "Denies access to alice completely.",
+      "Grants user alice read/write permissions.",
+      "Changes the file owner to alice.",
+      "Deletes all groups except alice."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "How to set default ACL permissions for new files in a directory?",
+    "answers": [
+      "setfacl -m",
+      "setfacl -d",
+      "setfacl --default-all",
+      "chmod +df"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What are the recommended permissions for the /etc/passwd file?",
+    "answers": [
+      "600",
+      "755",
+      "644",
+      "444"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which recommendation relates to the principle of least privilege?",
+    "answers": [
+      "Grant only the minimum necessary privileges.",
+      "Delete standard users and keep only root.",
+      "Give all network managers full access to /etc/shadow.",
+      "Grant write permissions to everyone for easy configuration."
+    ],
+    "correct": 0
+  },
+  {
+    "question": "What does the recommendation \"Never work as root permanently\" mean?",
+    "answers": [
+      "Root should be uninstalled from the OS.",
+      "Don't use root permanently; use sudo when necessary.",
+      "Passwords for root must change every hour.",
+      "Run applications using standard user profile directories only."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What should be done with unnecessary programs that have the SUID bit set?",
+    "answers": [
+      "Change their extension to .bak.",
+      "Remove the SUID bit or uninstall the program.",
+      "Move them to the /tmp folder.",
+      "Assign them to a system group with UID 0."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the recommended use of the umask command?",
+    "answers": [
+      "Configure secure default permissions.",
+      "Mask system processes from standard users.",
+      "Unmount damaged file system modules.",
+      "Enforce mandatory passwords rotation policy."
+    ],
+    "correct": 0
+  },
+  {
+    "question": "What does \"regular auditing\" imply in the context of best practices?",
+    "answers": [
+      "Running hardware performance benchmark stress tests.",
+      "Regularly checks the system, permissions, logs, and security.",
+      "Installing software packages update automatically every midnight.",
+      "Wiping hard drives logs weekly."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which process always has PID=1 in a modern Linux system?",
+    "answers": [
+      "initd",
+      "bash",
+      "systemd",
+      "kernel_main"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which command is used to view the status of a service in systemd?",
+    "answers": [
+      "service --check",
+      "journalctl -s",
+      "systemctl status service",
+      "systemd status --show"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "How to disable autostart of unnecessary services in systemd?",
+    "answers": [
+      "systemctl stop service",
+      "systemctl disable service",
+      "systemctl kill service",
+      "systemctl mask --now"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which command allows displaying logs of a specific systemd service?",
+    "answers": [
+      "cat /var/log/services",
+      "systemctl logs service",
+      "journalctl -u service",
+      "logshow --service"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "How to display the latest log entries in real time?",
+    "answers": [
+      "journalctl -all",
+      "journalctl -f",
+      "tail -n 10 /var/log/journal",
+      "watch journalctl"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Why is it important to forward system logs to a remote server?",
+    "answers": [
+      "Log protection and centralized monitoring.",
+      "To free up local storage space on low capacity devices.",
+      "It increases execution performance of running software.",
+      "To decrypt secure hashes using remote servers power."
+    ],
+    "correct": 0
+  },
+  {
+    "question": "Which systemd tool is used to forward logs to a remote server?",
+    "answers": [
+      "systemd-networkd",
+      "journalctl -send",
+      "systemd-journald (specifically systemd-journal-upload)",
+      "rsyslog-systemd"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which tool is used for initial firewall setup in Linux?",
+    "answers": [
+      "iptables-legacy",
+      "ufw (often) / firewalld in RHEL.",
+      "netstat -f",
+      "guard-linux"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the primary task of the BIOS/UEFI stage during Linux boot?",
+    "answers": [
+      "Initialize hardware and start the bootloader.",
+      "Load the Linux kernel into memory directly.",
+      "Run the network firewall rules.",
+      "Verify user login credentials."
+    ],
+    "correct": 0
+  },
+  {
+    "question": "What is the main purpose of the Secure Boot function?",
+    "answers": [
+      "Encrypt user documents partition.",
+      "Block the execution of unsigned code.",
+      "Prevent remote access attacks via SSH.",
+      "Force password entry during BIOS phase."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which bootloader is the most common in Linux?",
+    "answers": [
+      "LILO",
+      "Syslinux",
+      "GRUB2.",
+      "Systemd-boot"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Why is a password set on GRUB2?",
+    "answers": [
+      "To protect local web server databases.",
+      "Prevent unauthorized boot changes.",
+      "It allows regular users to login without entering profile passwords.",
+      "To satisfy hardware warranty rules."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which command creates a password hash for GRUB?",
+    "answers": [
+      "grub-mkpasswd-pbkdf2",
+      "grub2-hash-gen",
+      "passwd --grub",
+      "echo $PASSWORD | md5sum"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "Which command updates the GRUB configuration after making changes?",
+    "answers": [
+      "grub-reload",
+      "update-grub or grub2-mkconfig",
+      "systemctl restart grub",
+      "reboot --grub"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the primary function of the Kernel during system boot?",
+    "answers": [
+      "Presenting user terminal prompt.",
+      "Loading and managing hardware and system resources.",
+      "Checking database integrity.",
+      "Processing web assets code."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is the role of initramfs during Linux boot?",
+    "answers": [
+      "Saving system dump crashes logs.",
+      "Temporary root filesystem for loading drivers and preparing the system.",
+      "Clearing the /tmp folder before user login.",
+      "Authenticating root users ssh keys."
+    ],
+    "correct": 1
+  },
+  {
+    "question": "What is Heap Overflow?",
+    "answers": [
+      "Running out of storage capacity on root partition.",
+      "Heap memory overflow, allowing memory corruption and potentially executing malicious code.",
+      "Too many processes queue in systemd scheduling stack.",
+      "Network buffer overflow inside UDP packages."
+    ],
+    "correct": 1
   }
-];
+]
 
 let currentQuestion = 0;
 let score = 0;
