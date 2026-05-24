@@ -334,6 +334,7 @@ function startQuiz(mode, config = null) {
   isExamMode = false;
   selectedAnswerIndex = null;
   
+  // Возвращаем видимость элементов квиза
   questionEl.style.display = "block";
   answersEl.style.display = "flex";
   finalScore.innerHTML = "";
@@ -422,7 +423,7 @@ function nextQuestion() {
   currentQuestion++;
 
   if (currentQuestion >= quizQuestions.length) {
-    // Расчет процента правильных ответов
+    // РАСЧЕТ ПРОЦЕНТА ВЫПОЛНЕНИЯ (Работает для всех режимов)
     const percent = Math.round((score / quizQuestions.length) * 100);
 
     questionEl.style.display = "none";
