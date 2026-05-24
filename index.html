@@ -198,108 +198,164 @@
 </div>
 
 <script>
-
-let questions = [];
-
-fetch("questions.json")
-  .then(res => res.json())
-  .then(data => {
-    questions = data;
-    showQuestion(); // запускаем тест после загрузки
-  });
-
+let allQuestions = []; // Все вопросы из базы
+let quizQuestions = []; // Вопросы для текущей сессии
 let currentQuestion = 0;
 let score = 0;
+let isExamMode = false; // Флаг режима экзамена
+let selectedAnswerIndex = null; // Храним выбранный ответ для режима экзамена
 
 const menu = document.getElementById("menu");
 const quiz = document.getElementById("quiz");
-
 const questionEl = document.getElementById("question");
 const answersEl = document.getElementById("answers");
-
 const nextBtn = document.getElementById("nextBtn");
 const finalScore = document.getElementById("finalScore");
-
 const counter = document.getElementById("counter");
 const scoreLive = document.getElementById("scoreLive");
 
-function startQuiz(){
+// 1. Загружаем вопросы сразу при старте страницы
+fetch("questions.json")
+  .then(res => {
+    if (!res.ok) throw new Error("Не удалось загрузить вопросы. Проверьте questions.json");
+    return res.json();
+  })
+  .then(data => {
+    allQuestions = data;
+    console.log("Вопросы успешно загружены:", allQuestions.length);
+  })
+  .catch(err => {
+    alert("Ошибка конфигурации: убедитесь, что файл questions.json лежит в той же папке.");
+    console.error(err);
+  });
+
+// 2. Запуск квиза с учетом выбранного режима
+function startQuiz(mode, topic = null) {
+  if (allQuestions.length === 0) {
+    alert("Вопросы еще загружаются, подождите секунду...");
+    return;
+  }
+
+  // Сброс настроек
+  currentQuestion = 0;
+  score = 0;
+  isExamMode = false;
+  selectedAnswerIndex = null;
+  
+  // Возвращаем видимость элементам после предыдущих игр
+  questionEl.style.display = "block";
+  answersEl.style.display = "flex";
+  finalScore.innerHTML = "";
+  scoreLive.style.display = "block";
+
+  // Логика режимов
+  if (mode === 'study') {
+    quizQuestions = [...allQuestions];
+  } 
+  else if (mode === 'exam') {
+    isExamMode = true;
+    quizQuestions = [...allQuestions];
+    scoreLive.style.display = "none"; // На экзамене не спойлерим очки
+  } 
+  else if (mode === 'quick') {
+    // Перемешиваем и берем, например, 5 случайных вопросов
+    quizQuestions = [...allQuestions].sort(() => 0.5 - Math.random()).slice(0, 5);
+  } 
+  else if (mode === 'topic') {
+    // Фильтруем по теме (в questions.json должно быть поле "topic")
+    quizQuestions = allQuestions.filter(q => q.topic === topic);
+    if (quizQuestions.length === 0) {
+      alert(`Вопросов по теме "${topic}" не найдено. Запускаем общую базу.`);
+      quizQuestions = [...allQuestions];
+    }
+  }
+
   menu.style.display = "none";
   quiz.style.display = "block";
-
   showQuestion();
 }
 
-function showQuestion(){
-
+// 3. Отображение вопроса
+function showQuestion() {
   nextBtn.style.display = "none";
+  selectedAnswerIndex = null;
 
-  const q = questions[currentQuestion];
-
-  counter.innerText =
-    `Вопрос ${currentQuestion + 1} / ${questions.length}`;
-
-  scoreLive.innerText =
-    `Очки: ${score}`;
-
+  const q = quizQuestions[currentQuestion];
+  counter.innerText = `Вопрос ${currentQuestion + 1} / ${quizQuestions.length}`;
+  scoreLive.innerText = `Очки: ${score}`;
   questionEl.innerText = q.question;
-
   answersEl.innerHTML = "";
 
-  q.answers.forEach((answer,index)=>{
-
+  q.answers.forEach((answer, index) => {
     const btn = document.createElement("button");
-
     btn.innerText = answer;
-
-    btn.onclick = ()=>checkAnswer(index,btn);
-
+    btn.onclick = () => handleAnswerClick(index, btn);
     answersEl.appendChild(btn);
-
   });
 }
 
-function checkAnswer(index,button){
-
-  const q = questions[currentQuestion];
-
+// 4. Обработка клика
+function handleAnswerClick(index, button) {
+  const q = quizQuestions[currentQuestion];
   const buttons = answersEl.querySelectorAll("button");
 
-  buttons.forEach(btn=>btn.disabled = true);
-
-  if(index === q.correct){
-    button.classList.add("correct");
-    score++;
-  }else{
-    button.classList.add("wrong");
-    buttons[q.correct].classList.add("correct");
+  if (isExamMode) {
+    // В режиме экзамена просто фиксируем выбор, не показывая правильный/неправильный
+    buttons.forEach(btn => btn.style.background = "#edf2ff");
+    button.style.background = "#dbe7ff"; // Подсвечиваем выбранный
+    selectedAnswerIndex = index;
+    nextBtn.innerText = "Ответить";
+    nextBtn.style.display = "inline-block";
+  } else {
+    // В обычном режиме — мгновенная проверка
+    buttons.forEach(btn => btn.disabled = true);
+    if (index === q.correct) {
+      button.classList.add("correct");
+      score++;
+    } else {
+      button.classList.add("wrong");
+      buttons[q.correct].classList.add("correct");
+    }
+    scoreLive.innerText = `Очки: ${score}`;
+    nextBtn.innerText = "Следующий вопрос";
+    nextBtn.style.display = "inline-block";
   }
-
-  scoreLive.innerText =
-    `Очки: ${score}`;
-
-  nextBtn.style.display = "inline-block";
 }
 
-function nextQuestion(){
+// 5. Переход дальше
+function nextQuestion() {
+  const q = quizQuestions[currentQuestion];
+
+  // Если это экзамен, считаем очки только при переходе
+  if (isExamMode) {
+    if (selectedAnswerIndex === q.correct) {
+      score++;
+    }
+  }
 
   currentQuestion++;
 
-  if(currentQuestion >= questions.length){
-
+  if (currentQuestion >= quizQuestions.length) {
+    // Финал квиза
     questionEl.style.display = "none";
     answersEl.style.display = "none";
     nextBtn.style.display = "none";
+    scoreLive.style.display = "none";
 
-    finalScore.innerHTML =
-      `Ваш результат: ${score} / ${questions.length}`;
-
+    finalScore.innerHTML = `
+      <p>Ваш результат: <strong>${score} из ${quizQuestions.length}</strong></p>
+      <button class="next-btn" style="display:inline-block; margin-top:20px;" onclick="goToMenu()">В меню</button>
+    `;
     return;
   }
 
   showQuestion();
 }
 
+function goToMenu() {
+  quiz.style.display = "none";
+  menu.style.display = "block";
+}
 </script>
 
 </body>
