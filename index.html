@@ -199,31 +199,14 @@
 
 <script>
 
-const questions = [
-  {
-    question: "Какая команда показывает текущую директорию?",
-    answers: ["ls", "pwd", "cd", "mkdir"],
-    correct: 1
-  },
+let questions = [];
 
-  {
-    question: "Какая команда выводит список файлов?",
-    answers: ["cat", "ls", "pwd", "rm"],
-    correct: 1
-  },
-
-  {
-    question: "Какая команда удаляет файл?",
-    answers: ["touch", "nano", "rm", "cp"],
-    correct: 2
-  },
-
-  {
-    question: "Какая команда создает директорию?",
-    answers: ["mkdir", "rmdir", "grep", "mv"],
-    correct: 0
-  }
-];
+fetch("questions.json")
+  .then(res => res.json())
+  .then(data => {
+    questions = data;
+    showQuestion(); // запускаем тест после загрузки
+  });
 
 let currentQuestion = 0;
 let score = 0;
