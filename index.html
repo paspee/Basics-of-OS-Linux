@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Linux Quiz</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
+    }
+
+    body{
+      background:#f2f4f8;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      min-height:100vh;
+      padding:20px;
+    }
+
+    .container{
+      width:100%;
+      max-width:900px;
+      background:white;
+      border-radius:20px;
+      padding:40px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    h1{
+      text-align:center;
+      color:#005bbb;
+      margin-bottom:40px;
+      font-size:42px;
+    }
+
+    .modes{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:20px;
+    }
+
+    .card{
+      background:#0066d9;
+      color:white;
+      padding:25px;
+      border-radius:15px;
+      cursor:pointer;
+      transition:0.2s;
+    }
+
+    .card:hover{
+      transform:translateY(-5px);
+      background:#0052ad;
+    }
+
+    .card h2{
+      margin-bottom:15px;
+      font-size:28px;
+    }
+
+    .card p{
+      line-height:1.5;
+      opacity:0.95;
+    }
+
+    .quiz{
+      display:none;
+    }
+
+    .question{
+      font-size:28px;
+      margin-bottom:25px;
+      color:#222;
+    }
+
+    .answers{
+      display:flex;
+      flex-direction:column;
+      gap:15px;
+    }
+
+    .answers button{
+      padding:18px;
+      border:none;
+      border-radius:12px;
+      background:#edf2ff;
+      cursor:pointer;
+      font-size:18px;
+      transition:0.2s;
+    }
+
+    .answers button:hover{
+      background:#dbe7ff;
+    }
+
+    .correct{
+      background:#5fd38d !important;
+      color:white;
+    }
+
+    .wrong{
+      background:#ff6b6b !important;
+      color:white;
+    }
+
+    .next-btn{
+      margin-top:25px;
+      padding:15px 25px;
+      border:none;
+      border-radius:10px;
+      background:#0066d9;
+      color:white;
+      font-size:18px;
+      cursor:pointer;
+      display:none;
+    }
+
+    .score{
+      text-align:center;
+      font-size:32px;
+      margin-top:30px;
+      color:#0066d9;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      margin-bottom:20px;
+      font-size:20px;
+      color:#444;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <div id="menu">
+    <h1>Linux Fundamentals Quiz</h1>
+
+    <div class="modes">
+      <div class="card" onclick="startQuiz()">
+        <h2>Учебный режим</h2>
+        <p>
+          Мгновенная проверка ответов и обучение.
+        </p>
+      </div>
+
+      <div class="card" onclick="startQuiz()">
+        <h2>Экзамен</h2>
+        <p>
+          Результат только после окончания теста.
+        </p>
+      </div>
+
+      <div class="card" onclick="startQuiz()">
+        <h2>Быстрый тест</h2>
+        <p>
+          Случайные вопросы для тренировки.
+        </p>
+      </div>
+
+      <div class="card" onclick="startQuiz()">
+        <h2>По темам</h2>
+        <p>
+          Linux команды, Bash, процессы и права.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz" id="quiz">
+
+    <div class="topbar">
+      <div id="counter">Вопрос 1</div>
+      <div id="scoreLive">Очки: 0</div>
+    </div>
+
+    <div class="question" id="question">
+      Вопрос
+    </div>
+
+    <div class="answers" id="answers"></div>
+
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+      Следующий вопрос
+    </button>
+
+    <div class="score" id="finalScore"></div>
+
+  </div>
+
+</div>
+
+<script>
+
+const questions = [
+  {
+    question: "Какая команда показывает текущую директорию?",
+    answers: ["ls", "pwd", "cd", "mkdir"],
+    correct: 1
+  },
+
+  {
+    question: "Какая команда выводит список файлов?",
+    answers: ["cat", "ls", "pwd", "rm"],
+    correct: 1
+  },
+
+  {
+    question: "Какая команда удаляет файл?",
+    answers: ["touch", "nano", "rm", "cp"],
+    correct: 2
+  },
+
+  {
+    question: "Какая команда создает директорию?",
+    answers: ["mkdir", "rmdir", "grep", "mv"],
+    correct: 0
+  }
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+const menu = document.getElementById("menu");
+const quiz = document.getElementById("quiz");
+
+const questionEl = document.getElementById("question");
+const answersEl = document.getElementById("answers");
+
+const nextBtn = document.getElementById("nextBtn");
+const finalScore = document.getElementById("finalScore");
+
+const counter = document.getElementById("counter");
+const scoreLive = document.getElementById("scoreLive");
+
+function startQuiz(){
+  menu.style.display = "none";
+  quiz.style.display = "block";
+
+  showQuestion();
+}
+
+function showQuestion(){
+
+  nextBtn.style.display = "none";
+
+  const q = questions[currentQuestion];
+
+  counter.innerText =
+    `Вопрос ${currentQuestion + 1} / ${questions.length}`;
+
+  scoreLive.innerText =
+    `Очки: ${score}`;
+
+  questionEl.innerText = q.question;
+
+  answersEl.innerHTML = "";
+
+  q.answers.forEach((answer,index)=>{
+
+    const btn = document.createElement("button");
+
+    btn.innerText = answer;
+
+    btn.onclick = ()=>checkAnswer(index,btn);
+
+    answersEl.appendChild(btn);
+
+  });
+}
+
+function checkAnswer(index,button){
+
+  const q = questions[currentQuestion];
+
+  const buttons = answersEl.querySelectorAll("button");
+
+  buttons.forEach(btn=>btn.disabled = true);
+
+  if(index === q.correct){
+    button.classList.add("correct");
+    score++;
+  }else{
+    button.classList.add("wrong");
+    buttons[q.correct].classList.add("correct");
+  }
+
+  scoreLive.innerText =
+    `Очки: ${score}`;
+
+  nextBtn.style.display = "inline-block";
+}
+
+function nextQuestion(){
+
+  currentQuestion++;
+
+  if(currentQuestion >= questions.length){
+
+    questionEl.style.display = "none";
+    answersEl.style.display = "none";
+    nextBtn.style.display = "none";
+
+    finalScore.innerHTML =
+      `Ваш результат: ${score} / ${questions.length}`;
+
+    return;
+  }
+
+  showQuestion();
+}
+
+</script>
+
+</body>
+</html>
+```
