@@ -40,7 +40,7 @@
 
     .modes{
       display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
       gap:20px;
     }
 
@@ -216,13 +216,6 @@
           База разделена на 6 равных частей для более легкого и последовательного изучения.
         </p>
       </div>
-
-      <div class="card" onclick="startQuiz('long-quick')">
-        <h2>Длинный тест</h2>
-        <p>
-          20 случайных вопросов для серьезной тренировки.
-        </p>
-      </div>
     </div>
   </div>
 
@@ -353,9 +346,6 @@ function startQuiz(mode, config = null) {
     quizQuestions = [...allQuestions].sort(() => 0.5 - Math.random()).slice(0, 30);
     scoreLive.style.display = "none"; 
   } 
-  else if (mode === 'long-quick') {
-    quizQuestions = [...allQuestions].sort(() => 0.5 - Math.random()).slice(0, 20);
-  }
   else if (mode === 'part' && config) {
     quizQuestions = allQuestions.slice(config.start, config.end);
   }
@@ -430,9 +420,8 @@ function nextQuestion() {
   if (currentQuestion >= quizQuestions.length) {
     const percent = Math.round((score / quizQuestions.length) * 100);
 
-    // Логика кастомных комментариев по процентам
     let comment = "";
-    let commentColor = "#ff6b6b"; // Дефолтный красный для низких баллов
+    let commentColor = "#ff6b6b";
 
     if (percent <= 49) {
       comment = "таста ретейк";
